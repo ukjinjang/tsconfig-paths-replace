@@ -22,6 +22,7 @@
     "build": "tsc",
     "pretest": "run-s clean-test build",
     "test": "nyc jest --config jest.config.json",
+    "lint": "eslint --ext .ts ./src",
     "clean": "del-cli \"dist/*\"",
     "clean-test": "del-cli \"coverage/*\" \"dist-test/*\""
   },
