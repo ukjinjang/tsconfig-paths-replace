@@ -1,0 +1,11 @@
+{
+  "roots": ["./src", "./test"],
+  "automock": false,
+  "transform": {
+    "^.+\\.tsx?$": "ts-jest",
+    "^.+\\.jsx?$": "babel-jest"
+  },
+  "collectCoverage": true,
+  "collectCoverageFrom": ["src/**"],
+  "coverageReporters": [ "none" ]
+}

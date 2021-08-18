@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "outDir": "./dist",
+    "paths": {
+      "@beeper": ["./test/samples/awesome/print/beep"],
+      "@math/*": ["./test/samples/awesome/math/*"],
+      "@magic": ["./test/samples/magic"]
+    }
+  },
+}
