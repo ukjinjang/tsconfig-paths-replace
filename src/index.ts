@@ -9,6 +9,16 @@ import { argv, cwd } from './options';
 import { replaceImportPaths } from './replacePaths';
 
 /**
+ *
+ */
+function getOutFilename(filename: string) {
+  return path.resolve(
+    argv.emit as string,
+    filename.replace(argv.out as string, '').replace(/^\//, '')
+  );
+}
+
+/**
  * Rewrite path.
  */
 function rewriteFilePaths(filename: string, outFilename?: string) {
@@ -29,11 +39,7 @@ function rewriteFilePaths(filename: string, outFilename?: string) {
  */
 function handleWatchEvent(rawFilename: string) {
   const filename = path.resolve(rawFilename);
-  const outFilename = path.resolve(
-    argv.emit as string,
-    filename.replace(argv.out as string, '').replace(/^\//, '')
-  );
-
+  const outFilename = getOutFilename(rawFilename);
   rewriteFilePaths(filename, outFilename);
 }
 
@@ -53,7 +59,8 @@ if (argv.watch) {
 
 // non-watch mode
 else {
-  globby.sync(glob, {}).forEach(filepath => {
-    rewriteFilePaths(filepath);
+  globby.sync(glob, {}).forEach(filename => {
+    const outFilename = getOutFilename(filename);
+    rewriteFilePaths(filename, outFilename);
   });
 }

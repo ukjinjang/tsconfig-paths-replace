@@ -6,10 +6,7 @@ module.exports = {
     'plugin:@typescript-eslint/recommended-requiring-type-checking',
     'plugin:prettier/recommended',
   ],
-  plugins: [
-    '@typescript-eslint',
-    'simple-import-sort',
-  ],
+  plugins: ['@typescript-eslint', 'simple-import-sort'],
   parserOptions: {
     project: ['tsconfig.eslint.json'],
     tsconfigRootDir: __dirname,
@@ -81,4 +78,20 @@ module.exports = {
     'no-unused-expressions': 'off',
     'no-use-before-define': 'off',
   },
+  overrides: [
+    {
+      files: ['*.test.ts'],
+      extends: ['plugin:jest/all'],
+      plugins: ['jest'],
+      env: {
+        'jest/globals': true,
+      },
+      rules: {
+        'jest/no-conditional-expect': 'off',
+        'jest/no-hooks': ['error', { allow: ['beforeEach'] }],
+        'jest/prefer-called-with': 'off',
+        'jest/valid-expect-in-promise': 'off',
+      },
+    },
+  ],
 };
