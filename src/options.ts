@@ -30,7 +30,7 @@ program
   )
   .option(
     '-e, --emit <path>',
-    'path of replaced results (use `out` path by default)'
+    'output dir for emitted files (use `out` path by default)'
   )
   .option('-w, --watch', 'watch changes of source');
 
