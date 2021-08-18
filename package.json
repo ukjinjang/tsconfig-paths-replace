@@ -17,7 +17,6 @@
     "resolve"
   ],
   "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
   "scripts": {
     "prebuild": "del-cli \"dist/*\"",
     "build": "tsc"
