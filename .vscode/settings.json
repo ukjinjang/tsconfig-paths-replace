@@ -1,0 +1,30 @@
+{
+  // vscode
+  "editor.codeActionsOnSave": {
+    "source.fixAll": false,
+    "source.fixAll.eslint": true,
+    "source.fixAll.tslint": false,
+    "source.fixAll.stylelint": false
+  },
+  "editor.defaultFormatter": "dbaeumer.vscode-eslint",
+  "editor.formatOnPaste": true,
+  "editor.formatOnSave": true,
+
+  // ESLint
+  // ref: https://github.com/microsoft/vscode-eslint
+  // plugin: https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint
+  "eslint.codeActionsOnSave.mode": "problems",
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact"
+  ],
+
+  // Typescript
+  "typescript.tsdk": "node_modules/typescript/lib",
+
+  // VScode IntelliCode
+  // plugin: https://marketplace.visualstudio.com/items?itemName=VisualStudioExptTeam.vscodeintellicode
+  "vsintellicode.typescript.completionsEnabled": true
+}
