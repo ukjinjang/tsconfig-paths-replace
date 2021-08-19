@@ -1,0 +1,59 @@
+# configs
+.eslintignore
+.eslintrc.js
+.gitattributes
+.gitignore
+.nycrc.json
+.prettierrc
+tsconfig.eslint.json
+tsconfig.json
+
+# app sources
+src/
+playground/
+
+# test
+jest.config.json
+/__mocks__
+/.nyc_output
+/coverage
+/test
+/dist-test
+
+# compiled output
+/tmp
+
+# dependencies
+/node_modules
+
+# NPM
+.npmrc
+.npmignore
+package-lock.json
+yarn.lock
+
+# IDEs and editors
+/.idea
+/.vscode
+.editorconfig
+.project
+.classpath
+.c9/
+*.launch
+.settings
+*.sublime-workspace
+
+# misc
+/.circleci
+/.github
+/.sass-cache
+/connect.lock
+/libpeerconnection.log
+npm-debug.log
+yarn-error.log
+testem.log
+*.log
+
+# System Files
+.DS_Store
+Thumbs.db
