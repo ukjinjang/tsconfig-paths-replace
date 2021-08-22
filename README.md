@@ -50,7 +50,7 @@ With [tsc-watch](https://github.com/gilamran/tsc-watch), you can use callback `-
 ```json
 {
   "scripts": {
-    "watch": "tsc-watch -p tsconfig.watch.json --noClear --noColors --onSuccess \"tsconfig-paths-replace -p ./tsconfig.watch.json",
+    "watch": "tsc-watch -p tsconfig.watch.json --noClear --noColors --onSuccess \"tsconfig-paths-replace -p ./tsconfig.watch.json\"",
   },
 }
 ```
