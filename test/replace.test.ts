@@ -11,8 +11,6 @@ describe('tsconfig-paths-replace', () => {
       'src',
       '--project',
       './test/tsconfig.test.json',
-      '--src',
-      './test/samples',
       '--out',
       './test/samples',
       '--emit',

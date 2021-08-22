@@ -31,30 +31,26 @@ Use `&&` operator to run replace after transpile via `tsc`.
 
 #### Watch changes
 
-You can replace paths while run tsc as watch mode. (`-w, --watch`)
-
-Create new tsconfig file with different name (for now `tsconfig.watch.json`), and set `outDir` as temporary dir (to prevent infinite loop on watching event).
+You can replace paths while run tsc in watch (`-w, --watch`) mode. Create new tsconfig.json file with different name (for now `tsconfig.watch.json`).
 
 ```json
 // tsconfig.watch.json
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
-    "outDir": "./tmp",
     "incremental": true,
+    "tsBuildInfoFile": "./buildcache/watch.tsbuildinfo"
     // ...
   }
 }
 ```
 
-With [npm-run-all](https://www.npmjs.com/package/npm-run-all), you can run transpile and paths replacement in parallel. Make sure set `--watch` flag to both tsc and tsconfig-paths-replace. Also set different emit dir by using `--emit` option of tsconfig-paths-replace.
+With [tsc-watch](https://github.com/gilamran/tsc-watch), you can use callback `--onSuccess` after transpile done. Put `tsconfig-paths-replace` script at success command.
 
 ```json
 {
   "scripts": {
-    "watch": "run-p watch:tsc watch:tsconfig-path",
-    "watch:tsc": "tsc -p tsconfig.watch.json -w --preserveWatchOutput",
-    "watch:tsconfig-path": "tsconfig-paths-replace -p ./tsconfig.watch.json -w -s ./src -e ./dist"
+    "watch": "tsc-watch -p tsconfig.watch.json --noClear --noColors --onSuccess \"tsconfig-paths-replace -p ./tsconfig.watch.json",
   },
 }
 ```
@@ -68,9 +64,9 @@ Options:
   -V, --version         output the version number
   -p, --project <file>  path to tsconfig.json
   -c, --cwd <path>      current working directory
-  -s, --src <path>      root path of source (or `compilerOptions.baseUrl`)
+  -r, --root <path>     root path of source (or `compilerOptions.rootDir`)
   -o, --out <path>      path of transpiled code output directory (or `compilerOptions.outDir`)
   -e, --emit <path>     output dir for emitted files (use `out` path by default)
-  -w, --watch           watch changes of source
+  -w, --watch           watch changes of output directory
   -h, --help            display help for command
 ```
