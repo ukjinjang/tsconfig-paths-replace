@@ -1,7 +1,7 @@
 #! /usr/bin/env node
 
 import chokidar from 'chokidar';
-import fs from 'fs-extra';
+import fs from 'fs';
 import globby from 'globby';
 import path from 'path';
 
@@ -9,38 +9,31 @@ import { argv, cwd } from './options';
 import { replaceImportPaths } from './replacePaths';
 
 /**
- *
+ * Get filename to emit.
  */
-function getOutFilename(filename: string) {
+function getEmitFilename(filename: string) {
+  const resolvedFilename = path.resolve(filename);
+
   return path.resolve(
     argv.emit as string,
-    filename.replace(argv.out as string, '').replace(/^\//, '')
+    resolvedFilename.replace(argv.out as string, '').replace(/^\//, '')
   );
 }
 
 /**
  * Rewrite path.
  */
-function rewriteFilePaths(filename: string, outFilename?: string) {
+function rewriteFilePaths(filename: string) {
   if (!fs.existsSync(filename)) {
     return;
   }
 
-  const fileContent = fs.readFileSync(filename).toString();
-  const replacedContent = replaceImportPaths(filename, fileContent);
+  const content = fs.readFileSync(filename).toString();
+  const replacedContent = replaceImportPaths(filename, content);
 
-  outFilename = outFilename ?? filename;
-  fs.ensureDirSync(path.dirname(outFilename));
-  fs.writeFileSync(outFilename, replacedContent);
-}
-
-/**
- * Event handler for chokidar.
- */
-function handleWatchEvent(rawFilename: string) {
-  const filename = path.resolve(rawFilename);
-  const outFilename = getOutFilename(rawFilename);
-  rewriteFilePaths(filename, outFilename);
+  const emitFilename = getEmitFilename(filename);
+  fs.mkdirSync(path.dirname(emitFilename), { recursive: true });
+  fs.writeFileSync(emitFilename, replacedContent);
 }
 
 //
@@ -53,14 +46,11 @@ const glob = `${argv.out}/**/*.(j|t)s`;
 if (argv.watch) {
   chokidar
     .watch(glob, { cwd })
-    .on('add', handleWatchEvent)
-    .on('change', handleWatchEvent);
+    .on('add', rewriteFilePaths)
+    .on('change', rewriteFilePaths);
 }
 
 // non-watch mode
 else {
-  globby.sync(glob, {}).forEach(filename => {
-    const outFilename = getOutFilename(filename);
-    rewriteFilePaths(filename, outFilename);
-  });
+  globby.sync(glob, { cwd }).forEach(rewriteFilePaths);
 }

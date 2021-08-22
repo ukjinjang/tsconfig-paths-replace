@@ -1,7 +1,7 @@
 import path from 'path';
 import * as tscpath from 'tsconfig-paths';
 
-import { argv, compilerOptions, cwd } from './options';
+import { argv, compilerOptions } from './options';
 
 type PathReplaceFn = Parameters<typeof String.prototype.replace>[1];
 
@@ -11,12 +11,12 @@ const REGEX_IMPORT = /(?:import|from) ['"]([^'"]*)['"]/g;
 /**
  * Resolve absolute path from aliased module filename.
  */
-export function resolveAbsolutePath(moduleFilename: string) {
+export function resolveAbsolutePath(requestedModule: string) {
   return tscpath.createMatchPath(
-    cwd,
+    argv.out as string,
     compilerOptions.paths as NonNullable<typeof compilerOptions.paths>,
     []
-  )(moduleFilename);
+  )(requestedModule);
 }
 
 /**
@@ -29,18 +29,13 @@ export function replaceImportPaths(filename: string, fileContent: string) {
       return ori;
     }
 
-    const srcFilename = filename.replace(
-      argv.out as string,
-      argv.src as string
-    );
-
     const moduleFilename = resolveAbsolutePath(matched);
     if (!moduleFilename) {
       return ori;
     }
 
     const relModuleFilename = path.relative(
-      path.dirname(srcFilename),
+      path.dirname(filename),
       moduleFilename
     );
 

@@ -16,27 +16,31 @@
     "replace",
     "resolve"
   ],
+  "bin": {
+    "tsconfig-paths-replace": "dist/index.js"
+  },
   "main": "./dist/index.js",
   "scripts": {
     "prebuild": "run-s clean",
     "build": "tsc",
-    "pretest": "run-s clean-test build",
+    "pretest": "run-s clean-test",
     "test": "nyc jest --config jest.config.json",
     "lint": "eslint --ext .ts ./src",
     "clean": "del-cli \"dist/*\"",
     "clean-test": "del-cli \"coverage/*\" \"dist-test/*\""
   },
+  "peerDependencies": {
+    "tslib": ">=2.3.0",
+    "typescript": ">=2.7.0"
+  },
   "dependencies": {
     "chokidar": "^3.5.2",
     "commander": "^8.1.0",
-    "fs-extra": "^10.0.0",
-    "globby": "~11.0.4",
+    "globby": "^11.0.4",
     "tsconfig-paths": "^3.10.1",
-    "tslib": "^2.3.1",
-    "typescript": "~4.2.0"
+    "tslib": "^2.3.1"
   },
   "devDependencies": {
-    "@types/fs-extra": "^9.0.12",
     "@types/jest": "^27.0.1",
     "@typescript-eslint/eslint-plugin": "^4.29.2",
     "@typescript-eslint/parser": "^4.29.2",
@@ -52,6 +56,7 @@
     "nyc": "^15.1.0",
     "prettier": "^2.3.2",
     "ts-jest": "^27.0.5",
-    "ts-node": "^10.2.0"
+    "ts-node": "^10.2.0",
+    "typescript": "^4.3.5"
   }
 }
